@@ -2,7 +2,7 @@ require 'active_support/concern'
 
 module Rule
   module Engine
-    class ActiveRecord
+    module ActiveRecord
       extend ActiveSupport::Concern
 
       included do
@@ -10,7 +10,7 @@ module Rule
       end 
       
       module InstanceMethods
-        def validate
+        def run_rules
           @__rule_engine.run!(self)
         end 
       end 
