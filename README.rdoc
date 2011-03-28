@@ -1,0 +1,59 @@
+= Rule
+
+== What is it?
+
+Rule is a state machine / rule engine. It does things.
+
+== How do I get started?
+
+1. Add it to your gemfile.
+
+    gem "rule", :git => "https://github.com/innovatis/rule"
+
+2. Add a "state" column and this code to your model:
+
+    rule_engine MyAwesomeRuleEngine
+
+3. create a file at app/rule_engines/my_awesome_rule_engine.rb
+
+    class JobRuleEngine < Rule::Engine::Base
+     
+      state :new
+      state :ongoing
+      state :closed
+     
+      initial_state :new
+     
+      terminal_state :closed
+      
+      transition :new, :ongoing
+        validate IsInProgressRule
+      end 
+      
+      transition :ongoing, :closed
+        assert_presence_of object.closed_at, "Closed At" 
+      end 
+     
+    end 
+
+4. Create a file at app/rules/is_in_progress_rule.rb
+
+    class IsInProgressRule < Rule::Base
+      def validate
+        @object.in_progress.present?
+      end
+    end
+   
+== Explain all that stuff.
+
+Okay. 
+
+The Rule::Engine::Base subclass defines states and transitions. Each transition block contains a number of assertions and an optional priority. If any of the assertions does not pass, the state will not follow this transition. The priority decides which transition to use in the case of two possible transitions out of the current state both being valid. Use it by specifying "priority :high" or "priority :low" in the transition block.
+
+It often makes sense to bundle a group of assertions into a Rule class. These are defined in app/rules, and have a `validate` method containing assertions. In the future, rules will also have callbacks that fire when the state is advanced through a transition including that rule.
+
+If this didn't answer your questions, throw things at Burke until he explains.
+
+== Copyright
+
+Copyright (c) 2011 Burke Libbey / Innovatis. MIT License.
