@@ -16,7 +16,7 @@ Rule is a state machine / rule engine. It does things.
 
 3. create a file at app/rule_engines/my_awesome_rule_engine.rb
 
-    class JobRuleEngine < Rule::Engine::Base
+    class MyAwesomeRuleEngine < Rule::Engine::Base
      
       state :new
       state :ongoing
