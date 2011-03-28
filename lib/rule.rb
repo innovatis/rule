@@ -4,6 +4,7 @@ end
 path = File.dirname(__FILE__)
 $:.unshift(path) unless $:.include?(path)
 
+require 'rule/assertions'
 require 'rule/base'
 require 'rule/allow'
 require 'rule/disallow'

@@ -26,6 +26,12 @@ module Rule
         @object = object
         action.bind(self).call
       end 
+
+      def add_error(error)
+        raise Rule::Engine::InvalidTransition
+      end 
+      
+      include Rule::Assertions
       
       def validate(rule_klass)
         unless rule_klass.new(@object).validate
