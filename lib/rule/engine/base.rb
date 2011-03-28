@@ -33,7 +33,13 @@ module Rule
           state = prev_state.next_state(object)
           break if prev_state == state
         end 
-        object.update_attribute(@column, state.name)
+        
+        # don't force a save if this object is a new record.
+        if object.persisted?
+          object.update_attribute(@column, state.name)
+        else 
+          object.send("#{@column}=", state.name)
+        end 
       end 
 
       private #################################################################
