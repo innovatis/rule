@@ -27,7 +27,7 @@ module Rule
       end 
 
       def run!(object)
-        state = self.class.find_state(object.send(@column)) || @initial_state
+        state = self.class.find_state(object.send(@column)) || self.class.instance_variable_get("@initial_state")
         loop do
           prev_state = state
           state = prev_state.next_state(object)
