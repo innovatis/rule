@@ -1,5 +1,5 @@
 module Rule
-  class Disallow
+  class Disallow < Base
     def validate
       return false
     end 

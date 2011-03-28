@@ -11,7 +11,8 @@ module Rule
       
       module InstanceMethods
         def run_rules
-          @__rule_engine.run!(self)
+          engine = self.class.instance_variable_get("@__rule_engine")
+          engine.run!(self)
         end 
       end 
       

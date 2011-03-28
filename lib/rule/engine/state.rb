@@ -28,7 +28,10 @@ module Rule
       def next_state(object)
         transitions = valid_transitions(object)
         if transitions.any?
-          return transitions.sort_by{|transition| transition.priority}.last.to_state
+          return transitions.
+            sort_by{|transition| transition.instance_variable_get("@priority")}.
+            last.
+            to_state
         else 
           return self
         end 

@@ -27,13 +27,13 @@ module Rule
       end 
 
       def run!(object)
-        state = self.class.find_state!(object.send(column)) || @initial_state
+        state = self.class.find_state(object.send(@column)) || @initial_state
         loop do
           prev_state = state
           state = prev_state.next_state(object)
           break if prev_state == state
         end 
-        object.update_attribute(column, state.name)
+        object.update_attribute(@column, state.name)
       end 
 
       private #################################################################
@@ -47,11 +47,12 @@ module Rule
         state
       end 
 
+      def self.find_state(name)
+        @states.find { |state| state.name == name }
+      end 
+
       def self.find_state!(name)
-        unless state = @states.find { |state| state.name == name }
-          raise "State #{name} not declared."
-        end 
-        state
+        find_state(name) or raise "State #{name} not declared"
       end 
       
     end 
