@@ -1,7 +1,7 @@
 module Rule
   module Engine
     class Transition
-      attr_reader :from, :to, :action
+      attr_reader :from, :to, :action, :object
       alias_method :to_state, :to
       alias_method :from_state, :from
       
@@ -26,7 +26,7 @@ module Rule
         @object = object
         action.bind(self).call
       end 
-
+      
       def add_error(error)
         raise Rule::Engine::InvalidTransition
       end 
@@ -34,7 +34,7 @@ module Rule
       include Rule::Assertions
       
       def validate(rule_klass)
-        unless rule_klass.new(@object).validate
+        unless rule_klass.new(@object).pass?
           raise Rule::Engine::InvalidTransition
         end 
       end 

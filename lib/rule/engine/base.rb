@@ -34,12 +34,7 @@ module Rule
           break if prev_state == state
         end 
         
-        # don't force a save if this object is a new record.
-        if object.persisted?
-          object.update_attribute(@column, state.name)
-        else 
-          object.send("#{@column}=", state.name)
-        end 
+        object.send("#{@column}=", state.name)
       end 
 
       private #################################################################
