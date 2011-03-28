@@ -41,7 +41,7 @@ module Rule
       def self.find_or_create_state(name)
         @states ||= []
         unless state = @states.find { |state| state.name == name }
-          state = Rule::Engine::State.new(state)
+          state = Rule::Engine::State.new(name)
           @states << state
         end 
         state
@@ -49,7 +49,7 @@ module Rule
 
       def self.find_state!(name)
         unless state = @states.find { |state| state.name == name }
-          raise "State #{state} not declared."
+          raise "State #{name} not declared."
         end 
         state
       end 
