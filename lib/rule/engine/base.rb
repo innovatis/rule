@@ -2,6 +2,10 @@ module Rule
   module Engine
     class Base
 
+      def initialize(column)
+        @column = column
+      end 
+      
       def self.state(state)
         find_or_create_state(state)
       end 
@@ -22,8 +26,14 @@ module Rule
         from_state.add_transition(to_state, blk)
       end 
 
-      def run(object)
-                
+      def run!(object)
+        state = self.class.find_state!(object.send(column))
+        loop do
+          prev_state = state
+          state = prev_state.next_state(object)
+          break if prev_state == state
+        end 
+        object.update_attribute(column, state.name)
       end 
 
       private #################################################################

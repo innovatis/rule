@@ -2,6 +2,8 @@ module Rule
   module Engine
     class Transition
       attr_reader :from, :to, :action
+      alias_method :to_state, :to
+      alias_method :from_state, :from
       
       PRIORITIES = { 
         :min       => 0,

@@ -24,6 +24,16 @@ module Rule
           end 
         }.compact
       end 
+
+      def next_state(object)
+        transitions = valid_transitions(object)
+        if transitions.any?
+          return transitions.sort_by{|transition| transition.priority}.last.to_state
+        else 
+          return self
+        end 
+      end 
+
       
     end 
   end 
