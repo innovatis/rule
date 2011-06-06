@@ -27,7 +27,9 @@ module Rule
       end 
 
       def run!(object)
-        state = self.class.find_state(object.send(@column).try(:to_sym)) || self.class.instance_variable_get("@initial_state")
+        # state = self.class.find_state(object.send(@column).try(:to_sym)) || self.class.instance_variable_get("@initial_state")
+        # Revalidate from initial state each time. This is more along the lines of the behaviour dave wants.
+        state = self.class.instance_variable_get("@initial_state")
         loop do
           prev_state = state
           state = prev_state.next_state(object)
