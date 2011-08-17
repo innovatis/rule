@@ -3,15 +3,15 @@ module Rule
     class State
 
       attr_reader :name
-      
+
       def initialize(name)
         @name = name
         @transitions = []
-      end 
-          
+      end
+
       def add_transition(to, blk)
         @transitions << Transition.new(self, to, blk)
-      end 
+      end
 
       def valid_transitions(object)
         @transitions.map { |transition|
@@ -19,11 +19,11 @@ module Rule
             transition.run!(object)
           rescue Rule::Engine::InvalidTransition
             nil
-          else 
+          else
             transition
-          end 
+          end
         }.compact
-      end 
+      end
 
       def next_state(object)
         transitions = valid_transitions(object)
@@ -32,15 +32,15 @@ module Rule
             sort_by{|transition| transition.instance_variable_get("@priority")}.
             last.
             to_state
-        else 
+        else
           return self
-        end 
-      end 
+        end
+      end
 
-      
-    end 
-  end 
-end 
+
+    end
+  end
+end
 
 
 

@@ -5,17 +5,17 @@ module Rule
     def initialize(object)
       @object = object
       @errors = []
-    end 
-    
+    end
+
     def add_error(error)
       @errors << error
-    end 
+    end
 
     def pass?
       validate != false and @errors.none?
-    end 
-    
+    end
+
     include Rule::Assertions
-  end 
-end 
+  end
+end
 

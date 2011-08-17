@@ -4,8 +4,8 @@ module Rule
       attr_reader :from, :to, :action, :object
       alias_method :to_state, :to
       alias_method :from_state, :from
-      
-      PRIORITIES = { 
+
+      PRIORITIES = {
         :min       => 0,
         :very_low  => 1,
         :low       => 3,
@@ -14,30 +14,30 @@ module Rule
         :very_high => 9,
         :max       => 10
       }
-      
+
       def initialize(from, to, action)
         @from     = from
         @to       = to
         @action   = action
         @priority = PRIORITIES[:normal]
-      end 
-      
+      end
+
       def run!(object)
         @object = object
         action.bind(self).call
-      end 
-      
+      end
+
       def add_error(error)
         raise Rule::Engine::InvalidTransition
-      end 
-      
+      end
+
       include Rule::Assertions
-      
+
       def validate(rule_klass)
         unless rule_klass.new(@object).pass?
           raise Rule::Engine::InvalidTransition
-        end 
-      end 
+        end
+      end
 
       def priority(priority)
         case priority
@@ -45,14 +45,14 @@ module Rule
           @priority = priority
         when Symbol
           @priority = PRIORITIES[:normal]
-        else 
+        else
           raise "Invalid priority"
-        end 
-      end 
-      
-    end 
-  end 
-end 
+        end
+      end
+
+    end
+  end
+end
 
 
 

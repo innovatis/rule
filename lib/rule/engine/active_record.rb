@@ -6,22 +6,22 @@ module Rule
       extend ActiveSupport::Concern
 
       included do
-        
-      end 
-      
+
+      end
+
       module InstanceMethods
         def run_rules
           engine = self.class.instance_variable_get("@__rule_engine")
           engine.run!(self)
-        end 
-      end 
-      
+        end
+      end
+
       module ClassMethods
-        
-      end 
-      
-    end 
-  end 
-end 
+
+      end
+
+    end
+  end
+end
 
 

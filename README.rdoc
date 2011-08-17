@@ -17,24 +17,24 @@ Rule is a state machine / rule engine. It does things.
 3. create a file at app/rule_engines/my_awesome_rule_engine.rb
 
     class MyAwesomeRuleEngine < Rule::Engine::Base
-     
+
       state :new
       state :ongoing
       state :closed
-     
+
       initial_state :new
-     
+
       terminal_state :closed
-      
+
       transition :new, :ongoing
         validate IsInProgressRule
-      end 
-      
+      end
+
       transition :ongoing, :closed
-        assert_presence_of object.closed_at, "Closed At" 
-      end 
-     
-    end 
+        assert_presence_of object.closed_at, "Closed At"
+      end
+
+    end
 
 4. Create a file at app/rules/is_in_progress_rule.rb
 
@@ -43,7 +43,7 @@ Rule is a state machine / rule engine. It does things.
         @object.in_progress.present?
       end
     end
-   
+
 5. Set your application up to run the rules.
 
     # wherever it makes sense...
@@ -51,7 +51,7 @@ Rule is a state machine / rule engine. It does things.
 
 == Explain all that stuff.
 
-Okay. 
+Okay.
 
 The Rule::Engine::Base subclass defines states and transitions. Each transition block contains a number of assertions and an optional priority. If any of the assertions does not pass, the state will not follow this transition. The priority decides which transition to use in the case of two possible transitions out of the current state both being valid. Use it by specifying "priority :high" or "priority :low" in the transition block.
 
